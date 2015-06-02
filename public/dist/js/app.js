@@ -31319,6 +31319,10 @@ var TodayData = React.createClass({displayName: "TodayData",
       display: display
     }
 
+    var infoBMIStyle = {
+      display: display
+    }
+
     var buttonText = (this.props.todayDataWeight === '') ? "Save" : "Update";
     var today = new Date();
     var year = today.getFullYear();
@@ -31351,7 +31355,7 @@ var TodayData = React.createClass({displayName: "TodayData",
         React.createElement("label", {style: labelStyle, className: "col-xs-2"}, "Weight:"), 
         React.createElement("input", {onChange: this.handleChange, style: inputStyle, className: "col-xs-8", type: "text", value: this.state.inputValue}), 
         React.createElement(Button, {onClick: this.handleSave, className: "col-xs-2"}, buttonText), 
-        React.createElement("p", null, "Today BMI: ", React.createElement("span", null, userBMI)), 
+        React.createElement("p", {style: infoBMIStyle}, "Today BMI: ", React.createElement("span", null, userBMI)), 
         React.createElement("h1", null, React.createElement(Label, {bsStyle: userBMILabel}, userBMIText))
       )
     );

@@ -168,7 +168,7 @@ var Welcome = React.createClass({
         <h2>Welcome</h2>
         <h3>{this.props.name}</h3>
         <p>Height: <span>{this.props.height}</span> <UpdateHeight height={this.props.height} updateHeight={this.props.updateHeight} /></p>
-        <p>weight record <WeightChart dateLog={this.props.dateLog} weightLog={this.props.weightLog} /> </p>
+        <p>Your weight journal <WeightChart dateLog={this.props.dateLog} weightLog={this.props.weightLog} /> </p>
       </div>
     );
   }
