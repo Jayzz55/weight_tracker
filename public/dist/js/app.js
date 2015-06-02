@@ -80,7 +80,6 @@ var App = React.createClass({displayName: "App",
   },
 
   doSomething: function(){
-    console.log("yo");
     console.log(this.state);
   },
 
@@ -103,7 +102,7 @@ var App = React.createClass({displayName: "App",
     $.ajax({
       type: "PUT",
       url: "/api/users/" + this.state.userId,
-      data: JSON.stringify({'user':{ id:this.state.userId, height:newHeight }}),
+      data: JSON.stringify({'user':{ id:this.state.userId, height:newHeight, current_weight: this.state.currentWeight, goal_start_date: this.state.goalStartDate, goal_end_date: this.state.goalEndDate, goal_weight: this.state.goalWeight }}),
       success: function(){
         this.setState({
           height: newHeight,
@@ -120,8 +119,6 @@ var App = React.createClass({displayName: "App",
     var today = Date.now();
 
     if(this.state.todayDataWeight !== ''){
-      console.log(this.state);
-      console.log(this.state.todayDataWeightId);
       $.ajax({
         type: "PUT",
         url: "/api/weights/" + this.state.todayDataWeightId,
@@ -139,7 +136,7 @@ var App = React.createClass({displayName: "App",
       $.ajax({
         type: "PUT",
         url: "/api/users/" + this.state.userId,
-        data: JSON.stringify({'user':{ id:this.state.userId, current_weight:newWeight }}),
+        data: JSON.stringify({'user':{ id:this.state.userId, current_weight:newWeight, height: this.state.height, goal_start_date: this.state.goalStartDate, goal_end_date: this.state.goalEndDate, goal_weight: this.state.goalWeight }}),
         success: function(){
           this.setState({
             currentWeight: newWeight,
@@ -174,7 +171,7 @@ var App = React.createClass({displayName: "App",
       $.ajax({
         type: "PUT",
         url: "/api/users/" + this.state.userId,
-        data: JSON.stringify({'user':{ id:this.state.userId, current_weight:newWeight }}),
+        data: JSON.stringify({'user':{ id:this.state.userId, current_weight:newWeight, height: this.state.height, goal_start_date: this.state.goalStartDate, goal_end_date: this.state.goalEndDate, goal_weight: this.state.goalWeight }}),
         success: function(){
           this.setState({
             currentWeight: newWeight,
@@ -187,6 +184,27 @@ var App = React.createClass({displayName: "App",
       });
 
     };
+  },
+
+  saveGoal: function(targetDate, targetWeight){
+    var today = this.todayYear() + "-" + this.todayMonth() + "-" + this.todayDay();
+
+    $.ajax({
+      type: "PUT",
+      url: "/api/users/" + this.state.userId,
+      data: JSON.stringify({'user':{ id:this.state.userId, current_weight: this.state.currentWeight, height: this.state.height, goal_end_date: targetDate, goal_weight: targetWeight, goal_start_date: today }}),
+      success: function(){
+        this.setState({
+          goalStartDate: today,
+          goalEndDate: targetDate,
+          goalWeight: targetWeight,
+          notificationMessage: "Your goal has been set."
+        });
+        this.refs.notification.show();
+        console.log("success");
+      }.bind(this),
+      dataType: "json"
+    });
   },
 
   render: function(){
@@ -202,8 +220,8 @@ var App = React.createClass({displayName: "App",
           dateLog: this.state.dateLog, 
           weightLog: this.state.weightLog}
         ), 
-        React.createElement(TodayData, {saveTodayWeight: this.saveTodayWeight, todayDataWeight: this.state.todayDataWeight}), 
-        React.createElement(SetGoal, null), 
+        React.createElement(TodayData, {height: this.state.height, currentWeight: this.state.currentWeight, saveTodayWeight: this.saveTodayWeight, todayDataWeight: this.state.todayDataWeight}), 
+        React.createElement(SetGoal, {saveGoal: this.saveGoal}), 
         React.createElement(CurrentGoal, null), 
         React.createElement(Notification, {
           ref: "notification", 
@@ -31020,12 +31038,29 @@ var Modal = require('react-bootstrap').Modal;
 var OverlayMixin = require('react-bootstrap').OverlayMixin;
 
 const SettingForm = React.createClass({displayName: "SettingForm",
+
+  handleSaveGoal: function(e){
+    e.preventDefault();
+    var targetDate= this.refs.targetDate.getDOMNode().value;
+    var targetWeight= this.refs.targetWeight.getDOMNode().value;
+    this.props.saveGoal(targetDate, targetWeight);
+  },
+
   render: function(){
+
+    var inputStyle = {
+      width: '83%',
+      display: 'inline',
+      marginBottom: '20px'
+    };
+
     return(
       React.createElement("form", {className: "form-horizontal"}, 
-        React.createElement(Input, {type: "date", label: "Target Date", labelClassName: "col-xs-2", wrapperClassName: "col-xs-10"}), 
-        React.createElement(Input, {type: "number", step: "0.01", label: "Target Weight(kg)", defaultValue: "1.5", labelClassName: "col-xs-2", wrapperClassName: "col-xs-10"}), 
-        React.createElement(Button, {className: "col-xs-offset-2 col-xs-10", bsStyle: "primary"}, "Set!")
+        React.createElement("label", {className: "col-xs-2"}, "Target Date"), 
+        React.createElement("input", {className: "col-xs-10", style: inputStyle, ref: "targetDate", type: "date"}), 
+        React.createElement("label", {className: "col-xs-2"}, "Target Weight (kg)"), 
+        React.createElement("input", {className: "col-xs-10", style: inputStyle, ref: "targetWeight", type: "number", step: "0.1"}), 
+        React.createElement(Button, {onClick: this.handleSaveGoal, className: "col-xs-offset-2 col-xs-10", bsStyle: "primary"}, "Set!")
       )
     )
   }
@@ -31075,7 +31110,7 @@ const GoalModal = React.createClass({displayName: "GoalModal",
       React.createElement(Modal, {title: "Set your Goal", onRequestHide: this.handleToggle}, 
         React.createElement("div", {className: "modal-body"}, 
           React.createElement("div", {style: modalBodyStyle}, 
-            React.createElement(SettingForm, null)
+            React.createElement(SettingForm, {saveGoal: this.props.saveGoal})
           )
         ), 
         React.createElement("div", {className: "modal-footer"}, 
@@ -31087,11 +31122,12 @@ const GoalModal = React.createClass({displayName: "GoalModal",
 });
 
 var SetGoal = React.createClass({displayName: "SetGoal",
+
   render: function() {
 
     return (
       React.createElement("div", {className: "col-md-6 col-md-offset-3 text-center"}, 
-        React.createElement(GoalModal, null)
+        React.createElement(GoalModal, {saveGoal: this.props.saveGoal})
       )
     );
   }
@@ -31112,8 +31148,14 @@ var TodayData = React.createClass({displayName: "TodayData",
 
   getInitialState: function() {
     return {
-      inputValue: this.props.todayDataWeight
+      inputValue: ''
     };
+  },
+
+  componentWillReceiveProps: function(nextProps) {
+    this.setState({
+      inputValue: nextProps.todayDataWeight
+    });
   },
 
   handleSave: function(e){
@@ -31122,8 +31164,10 @@ var TodayData = React.createClass({displayName: "TodayData",
     this.props.saveTodayWeight(newWeight);
   },
 
-  doSomething: function(){
-    // console.log(e);
+  handleChange: function(e){
+    this.setState({
+      inputValue: e.target.value
+    });
   },
 
   render: function() {
@@ -31149,16 +31193,34 @@ var TodayData = React.createClass({displayName: "TodayData",
     var month = today.getMonth() + 1;
     var date = today.getDate();
 
+    var userHeight = parseFloat(this.props.height,10);
+    var userWeight = parseFloat(this.props.currentWeight,10);
+    var userBMI = parseInt(userWeight/userHeight/userHeight,10);
+
+    var userBMIText = '';
+    var userBMILabel = '';
+
+    if (userBMI < 20){
+      userBMIText = "Underweight";
+      userBMILabel = 'warning';
+    } else if (userBMI > 25) {
+      userBMIText = "Overweight";
+      userBMILabel = 'danger';
+    } else {
+      userBMIText = "Ideal";
+      userBMILabel = 'success';
+    }
+
     return (
       React.createElement("div", {className: "col-md-6 col-md-offset-3 text-center"}, 
         React.createElement("h3", null, "Today (", date + '/' + month + '/' + year, ") data:"), 
         React.createElement("hr", null), 
         React.createElement("p", {style: infoStyle}, "Today recorded data: ", this.props.todayDataWeight, " kg"), 
         React.createElement("label", {style: labelStyle, className: "col-xs-2"}, "Weight:"), 
-        React.createElement("input", {style: inputStyle, className: "col-xs-8", ref: "weight", type: "text", placeholder: this.props.todayDataWeight}), 
+        React.createElement("input", {onChange: this.handleChange, style: inputStyle, className: "col-xs-8", ref: "weight", type: "text", value: this.state.inputValue}), 
         React.createElement(Button, {onClick: this.handleSave, className: "col-xs-2"}, buttonText), 
-        React.createElement("p", null, "BMI: ", React.createElement("span", null, "20")), 
-        React.createElement("h1", null, React.createElement(Label, {bsStyle: "success"}, "Ideal"))
+        React.createElement("p", null, "Today BMI: ", React.createElement("span", null, userBMI)), 
+        React.createElement("h1", null, React.createElement(Label, {bsStyle: userBMILabel}, userBMIText))
       )
     );
   }
@@ -31236,7 +31298,7 @@ const UpdateHeight = React.createClass({displayName: "UpdateHeight",
     };
 
     return (
-      React.createElement(Modal, {title: "Xing's detail setting", onRequestHide: this.handleToggle}, 
+      React.createElement(Modal, {title: "Height update", onRequestHide: this.handleToggle}, 
         React.createElement("div", {className: "modal-body", style: modalBodyStyle}, 
           React.createElement(HeightForm, {height: this.props.height, updateHeight: this.props.updateHeight})
         ), 

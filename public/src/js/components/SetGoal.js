@@ -8,12 +8,29 @@ var Modal = require('react-bootstrap').Modal;
 var OverlayMixin = require('react-bootstrap').OverlayMixin;
 
 const SettingForm = React.createClass({
+
+  handleSaveGoal: function(e){
+    e.preventDefault();
+    var targetDate= this.refs.targetDate.getDOMNode().value;
+    var targetWeight= this.refs.targetWeight.getDOMNode().value;
+    this.props.saveGoal(targetDate, targetWeight);
+  },
+
   render: function(){
+
+    var inputStyle = {
+      width: '83%',
+      display: 'inline',
+      marginBottom: '20px'
+    };
+
     return(
       <form className='form-horizontal'>
-        <Input type='date' label='Target Date' labelClassName='col-xs-2' wrapperClassName='col-xs-10' />
-        <Input type="number" step="0.01" label='Target Weight(kg)' defaultValue='1.5' labelClassName='col-xs-2' wrapperClassName='col-xs-10' />
-        <Button className='col-xs-offset-2 col-xs-10' bsStyle='primary'>Set!</Button>
+        <label className='col-xs-2'>Target Date</label>
+        <input className='col-xs-10' style={inputStyle} ref="targetDate" type="date" />
+        <label className='col-xs-2'>Target Weight (kg)</label>
+        <input className='col-xs-10' style={inputStyle} ref="targetWeight" type="number" step="0.1" />
+        <Button onClick={this.handleSaveGoal} className='col-xs-offset-2 col-xs-10' bsStyle='primary'>Set!</Button>
       </form>
     )
   }
@@ -63,7 +80,7 @@ const GoalModal = React.createClass({
       <Modal title='Set your Goal' onRequestHide={this.handleToggle}>
         <div className='modal-body'>
           <div style={modalBodyStyle} >
-            <SettingForm />
+            <SettingForm saveGoal={this.props.saveGoal} />
           </div>
         </div>
         <div className='modal-footer'>
@@ -75,11 +92,12 @@ const GoalModal = React.createClass({
 });
 
 var SetGoal = React.createClass({
+
   render: function() {
 
     return (
       <div className="col-md-6 col-md-offset-3 text-center">
-        <GoalModal />
+        <GoalModal saveGoal={this.props.saveGoal} />
       </div>
     );
   }

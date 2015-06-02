@@ -75,7 +75,7 @@ put '/api/users/:id' do
   request_body = JSON.parse(request.body.read.to_s)
   user_params = request_body["user"]
   user = User.find(params[:id])
-  user.update(height: user_params['height'])
+  user.update(height: user_params['height'], current_weight: user_params['current_weight'], goal_weight: user_params['goal_weight'], goal_start_date: user_params['goal_start_date'], goal_end_date: user_params['goal_end_date'])
   content_type :json
   user.to_json
 end

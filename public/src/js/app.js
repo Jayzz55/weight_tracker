@@ -79,7 +79,6 @@ var App = React.createClass({
   },
 
   doSomething: function(){
-    console.log("yo");
     console.log(this.state);
   },
 
@@ -102,7 +101,7 @@ var App = React.createClass({
     $.ajax({
       type: "PUT",
       url: "/api/users/" + this.state.userId,
-      data: JSON.stringify({'user':{ id:this.state.userId, height:newHeight }}),
+      data: JSON.stringify({'user':{ id:this.state.userId, height:newHeight, current_weight: this.state.currentWeight, goal_start_date: this.state.goalStartDate, goal_end_date: this.state.goalEndDate, goal_weight: this.state.goalWeight }}),
       success: function(){
         this.setState({
           height: newHeight,
@@ -119,8 +118,6 @@ var App = React.createClass({
     var today = Date.now();
 
     if(this.state.todayDataWeight !== ''){
-      console.log(this.state);
-      console.log(this.state.todayDataWeightId);
       $.ajax({
         type: "PUT",
         url: "/api/weights/" + this.state.todayDataWeightId,
@@ -138,7 +135,7 @@ var App = React.createClass({
       $.ajax({
         type: "PUT",
         url: "/api/users/" + this.state.userId,
-        data: JSON.stringify({'user':{ id:this.state.userId, current_weight:newWeight }}),
+        data: JSON.stringify({'user':{ id:this.state.userId, current_weight:newWeight, height: this.state.height, goal_start_date: this.state.goalStartDate, goal_end_date: this.state.goalEndDate, goal_weight: this.state.goalWeight }}),
         success: function(){
           this.setState({
             currentWeight: newWeight,
@@ -173,7 +170,7 @@ var App = React.createClass({
       $.ajax({
         type: "PUT",
         url: "/api/users/" + this.state.userId,
-        data: JSON.stringify({'user':{ id:this.state.userId, current_weight:newWeight }}),
+        data: JSON.stringify({'user':{ id:this.state.userId, current_weight:newWeight, height: this.state.height, goal_start_date: this.state.goalStartDate, goal_end_date: this.state.goalEndDate, goal_weight: this.state.goalWeight }}),
         success: function(){
           this.setState({
             currentWeight: newWeight,
@@ -186,6 +183,27 @@ var App = React.createClass({
       });
 
     };
+  },
+
+  saveGoal: function(targetDate, targetWeight){
+    var today = this.todayYear() + "-" + this.todayMonth() + "-" + this.todayDay();
+
+    $.ajax({
+      type: "PUT",
+      url: "/api/users/" + this.state.userId,
+      data: JSON.stringify({'user':{ id:this.state.userId, current_weight: this.state.currentWeight, height: this.state.height, goal_end_date: targetDate, goal_weight: targetWeight, goal_start_date: today }}),
+      success: function(){
+        this.setState({
+          goalStartDate: today,
+          goalEndDate: targetDate,
+          goalWeight: targetWeight,
+          notificationMessage: "Your goal has been set."
+        });
+        this.refs.notification.show();
+        console.log("success");
+      }.bind(this),
+      dataType: "json"
+    });
   },
 
   render: function(){
@@ -201,8 +219,8 @@ var App = React.createClass({
           dateLog={this.state.dateLog}
           weightLog={this.state.weightLog}
         />
-        <TodayData saveTodayWeight={this.saveTodayWeight} todayDataWeight={this.state.todayDataWeight}/>
-        <SetGoal />
+        <TodayData height={this.state.height} currentWeight={this.state.currentWeight} saveTodayWeight={this.saveTodayWeight} todayDataWeight={this.state.todayDataWeight}/>
+        <SetGoal saveGoal={this.saveGoal}/>
         <CurrentGoal />
         <Notification
           ref="notification"

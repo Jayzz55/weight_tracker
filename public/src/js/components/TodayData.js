@@ -9,8 +9,14 @@ var TodayData = React.createClass({
 
   getInitialState: function() {
     return {
-      inputValue: this.props.todayDataWeight
+      inputValue: ''
     };
+  },
+
+  componentWillReceiveProps: function(nextProps) {
+    this.setState({
+      inputValue: nextProps.todayDataWeight
+    });
   },
 
   handleSave: function(e){
@@ -19,8 +25,10 @@ var TodayData = React.createClass({
     this.props.saveTodayWeight(newWeight);
   },
 
-  doSomething: function(){
-    // console.log(e);
+  handleChange: function(e){
+    this.setState({
+      inputValue: e.target.value
+    });
   },
 
   render: function() {
@@ -46,16 +54,34 @@ var TodayData = React.createClass({
     var month = today.getMonth() + 1;
     var date = today.getDate();
 
+    var userHeight = parseFloat(this.props.height,10);
+    var userWeight = parseFloat(this.props.currentWeight,10);
+    var userBMI = parseInt(userWeight/userHeight/userHeight,10);
+
+    var userBMIText = '';
+    var userBMILabel = '';
+
+    if (userBMI < 20){
+      userBMIText = "Underweight";
+      userBMILabel = 'warning';
+    } else if (userBMI > 25) {
+      userBMIText = "Overweight";
+      userBMILabel = 'danger';
+    } else {
+      userBMIText = "Ideal";
+      userBMILabel = 'success';
+    }
+
     return (
       <div className="col-md-6 col-md-offset-3 text-center">
         <h3>Today ({date + '/' + month + '/' + year}) data:</h3>
         <hr/>
         <p style={infoStyle}>Today recorded data: {this.props.todayDataWeight} kg</p>
         <label style={labelStyle} className='col-xs-2'>Weight:</label>
-        <input style={inputStyle} className='col-xs-8' ref="weight" type='text' placeholder={this.props.todayDataWeight}/>
+        <input onChange={this.handleChange} style={inputStyle} className='col-xs-8' ref="weight" type='text' value={this.state.inputValue}/>
         <Button onClick={this.handleSave} className='col-xs-2'>{buttonText}</Button>
-        <p>BMI: <span>20</span></p>
-        <h1><Label bsStyle='success'>Ideal</Label></h1>
+        <p>Today BMI: <span>{userBMI}</span></p>
+        <h1><Label bsStyle={userBMILabel}>{userBMIText}</Label></h1>
       </div>
     );
   }

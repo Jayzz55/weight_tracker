@@ -66,7 +66,7 @@ const UpdateHeight = React.createClass({
     };
 
     return (
-      <Modal title="Xing's detail setting" onRequestHide={this.handleToggle}>
+      <Modal title="Height update" onRequestHide={this.handleToggle}>
         <div className='modal-body' style={modalBodyStyle}>
           <HeightForm height={this.props.height} updateHeight={this.props.updateHeight} />
         </div>
