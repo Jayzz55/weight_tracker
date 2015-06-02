@@ -8,6 +8,18 @@ var Notification = require('react-notification');
 
 var App = React.createClass({
 
+  todayYear: function(){
+    return new Date().getFullYear();
+  },
+
+  todayMonth: function(){
+    return new Date().getMonth() + 1;
+  },
+
+  todayDay: function(){
+    return new Date().getDay();
+  },
+
   getInitialState: function() {
     return {
       notificationMessage: '',
@@ -16,12 +28,8 @@ var App = React.createClass({
   },
 
   isTodayDataRecorded: function(){
-    var today = new Date();
-    var year = today.getFullYear();
-    var month = today.getMonth() + 1;
-    var date = today.getDate();
     var latestRecordedWeight = this.state.dateLog[this.state.dateLog.length - 1];
-    if(latestRecordedWeight === (year+'-'+month+'-'+date)){
+    if(latestRecordedWeight === (this.todayYear()+'-'+this.todayMonth()+'-'+this.todayDay())){
       return true;
     } else {
       return false;
@@ -62,7 +70,8 @@ var App = React.createClass({
         });
         if(this.isTodayDataRecorded()){
           this.setState({
-            todayDataWeight: this.state.weightLog[this.state.weightLog.length - 1]
+            todayDataWeight: this.state.weightLog[this.state.weightLog.length - 1],
+            todayDataWeightId: result[result.length-1].id
           });
         };
       }
@@ -110,15 +119,17 @@ var App = React.createClass({
     var today = Date.now();
 
     if(this.state.todayDataWeight !== ''){
+      console.log(this.state);
       console.log(this.state.todayDataWeightId);
       $.ajax({
         type: "PUT",
         url: "/api/weights/" + this.state.todayDataWeightId,
         data: JSON.stringify({'weight':{ weight:newWeight}}),
         success: function(){
-          console.log("successfully update new weight data");
+          var newWeightLog = this.state.weightLog.slice(0,this.state.weightLog.length-1).concat([newWeight]);
           this.setState({
-            todayDataWeight: newWeight
+            todayDataWeight: newWeight,
+            weightLog: newWeightLog
           })
         }.bind(this),
         dataType: "json"
@@ -145,11 +156,15 @@ var App = React.createClass({
         url: "/api/weights",
         data: JSON.stringify({'weight':{ user_id:this.state.userId, weight:newWeight, date_log:today }}),
         success: function(response){
-          console.log(response);
-          console.log("successfully create new weight data");
+          var todayDate = this.todayYear() + "-" + this.todayMonth() + "-" + this.todayDay();
+          var newDateLog = this.state.dateLog.concat([todayDate]);
+          var newWeightLog = this.state.weightLog.concat([newWeight]);
+
           this.setState({
             todayDataWeight: newWeight,
-            todayDataWeightId: response.id
+            todayDataWeightId: response.id,
+            dateLog: newDateLog,
+            weightLog: newWeightLog
           })
         }.bind(this),
         dataType: "json"
