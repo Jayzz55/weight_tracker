@@ -23,7 +23,6 @@ const HeightForm = React.createClass({
 
   handleUpdateHeight: function(e){
     e.preventDefault();
-    // var newHeight= this.refs.height.getDOMNode().value;
     var newHeight= this.state.height;
     this.props.updateHeight(newHeight);
   },
