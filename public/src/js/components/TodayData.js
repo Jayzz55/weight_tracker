@@ -21,7 +21,7 @@ var TodayData = React.createClass({
 
   handleSave: function(e){
     e.preventDefault();
-    var newWeight= this.refs.weight.getDOMNode().value;
+    var newWeight= this.state.inputValue;
     this.props.saveTodayWeight(newWeight);
   },
 
@@ -59,7 +59,7 @@ var TodayData = React.createClass({
     var userBMI = parseInt(userWeight/userHeight/userHeight,10);
 
     var userBMIText = '';
-    var userBMILabel = '';
+    var userBMILabel = 'default';
 
     if (userBMI < 20){
       userBMIText = "Underweight";
@@ -67,7 +67,7 @@ var TodayData = React.createClass({
     } else if (userBMI > 25) {
       userBMIText = "Overweight";
       userBMILabel = 'danger';
-    } else {
+    } else if(userBMI > 20 && userBMI < 25) {
       userBMIText = "Ideal";
       userBMILabel = 'success';
     }
@@ -78,7 +78,7 @@ var TodayData = React.createClass({
         <hr/>
         <p style={infoStyle}>Today recorded data: {this.props.todayDataWeight} kg</p>
         <label style={labelStyle} className='col-xs-2'>Weight:</label>
-        <input onChange={this.handleChange} style={inputStyle} className='col-xs-8' ref="weight" type='text' value={this.state.inputValue}/>
+        <input onChange={this.handleChange} style={inputStyle} className='col-xs-8' type='text' value={this.state.inputValue}/>
         <Button onClick={this.handleSave} className='col-xs-2'>{buttonText}</Button>
         <p>Today BMI: <span>{userBMI}</span></p>
         <h1><Label bsStyle={userBMILabel}>{userBMIText}</Label></h1>

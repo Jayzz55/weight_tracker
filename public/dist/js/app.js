@@ -31160,7 +31160,7 @@ var TodayData = React.createClass({displayName: "TodayData",
 
   handleSave: function(e){
     e.preventDefault();
-    var newWeight= this.refs.weight.getDOMNode().value;
+    var newWeight= this.state.inputValue;
     this.props.saveTodayWeight(newWeight);
   },
 
@@ -31198,7 +31198,7 @@ var TodayData = React.createClass({displayName: "TodayData",
     var userBMI = parseInt(userWeight/userHeight/userHeight,10);
 
     var userBMIText = '';
-    var userBMILabel = '';
+    var userBMILabel = 'default';
 
     if (userBMI < 20){
       userBMIText = "Underweight";
@@ -31206,7 +31206,7 @@ var TodayData = React.createClass({displayName: "TodayData",
     } else if (userBMI > 25) {
       userBMIText = "Overweight";
       userBMILabel = 'danger';
-    } else {
+    } else if(userBMI > 20 && userBMI < 25) {
       userBMIText = "Ideal";
       userBMILabel = 'success';
     }
@@ -31217,7 +31217,7 @@ var TodayData = React.createClass({displayName: "TodayData",
         React.createElement("hr", null), 
         React.createElement("p", {style: infoStyle}, "Today recorded data: ", this.props.todayDataWeight, " kg"), 
         React.createElement("label", {style: labelStyle, className: "col-xs-2"}, "Weight:"), 
-        React.createElement("input", {onChange: this.handleChange, style: inputStyle, className: "col-xs-8", ref: "weight", type: "text", value: this.state.inputValue}), 
+        React.createElement("input", {onChange: this.handleChange, style: inputStyle, className: "col-xs-8", type: "text", value: this.state.inputValue}), 
         React.createElement(Button, {onClick: this.handleSave, className: "col-xs-2"}, buttonText), 
         React.createElement("p", null, "Today BMI: ", React.createElement("span", null, userBMI)), 
         React.createElement("h1", null, React.createElement(Label, {bsStyle: userBMILabel}, userBMIText))
