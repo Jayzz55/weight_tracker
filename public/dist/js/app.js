@@ -222,7 +222,7 @@ var App = React.createClass({displayName: "App",
         ), 
         React.createElement(TodayData, {height: this.state.height, currentWeight: this.state.currentWeight, saveTodayWeight: this.saveTodayWeight, todayDataWeight: this.state.todayDataWeight}), 
         React.createElement(SetGoal, {targetDate: this.state.goalEndDate, targetWeight: this.state.goalWeight, saveGoal: this.saveGoal}), 
-        React.createElement(CurrentGoal, null), 
+        React.createElement(CurrentGoal, {startDate: this.state.goalStartDate, targetDate: this.state.goalEndDate, targetWeight: this.state.goalWeight, currentWeight: this.state.currentWeight}), 
         React.createElement(Notification, {
           ref: "notification", 
           message: this.state.notificationMessage, 
@@ -30980,18 +30980,31 @@ var CurrentGoal = React.createClass({displayName: "CurrentGoal",
       border: '3px solid #555'
     }
 
+    var targetDate = new Date(this.props.targetDate);
+    var startDate = new Date(this.props.startDate);
+    var timeDiffStartEnd = Math.abs(targetDate.getTime() - startDate.getTime());
+    var totalDiffDays = Math.floor(timeDiffStartEnd / (1000 * 3600 * 24)); 
+    var todayDate = new Date();
+    var timeDiffStartToday = Math.abs(todayDate.getTime() - startDate.getTime());
+    var diffDaysTilToday = Math.floor(timeDiffStartToday / (1000 * 3600 * 24));
+    var percentageDays = parseInt(diffDaysTilToday / totalDiffDays * 100,10);
+
+    var weightToGo = Math.abs(this.props.currentWeight - this.props.targetWeight);
+    var message = (this.props.currentWeight - this.props.targetWeight) > 0 ? "lose" : "gain";
+
+    console.log(percentageDays );
+
     return (
       React.createElement(Well, {className: "col-md-6 col-md-offset-3 text-center", id: "current-goal"}, 
         React.createElement("h3", null, "Current Goal:"), 
         React.createElement("hr", {style: hrStyle}), 
-        React.createElement("h3", null, "Goal: ", React.createElement("span", null, "30"), "kg"), 
-        React.createElement(ProgressBar, {now: 60}), 
+        React.createElement("h3", null, "Goal: ", React.createElement("span", null, this.props.targetWeight), "kg"), 
+        React.createElement(ProgressBar, {now: percentageDays}), 
         React.createElement("div", {className: "clearfix"}, 
-          React.createElement("span", {style: floatLeftStyle}, "Start!"), 
-          React.createElement("span", {style: floatRightStyle}, "Goal!")
+          React.createElement("span", {style: floatLeftStyle}, this.props.startDate), 
+          React.createElement("span", {style: floatRightStyle}, this.props.targetDate)
         ), 
-        React.createElement("p", null, "5 kg to go!"), 
-        React.createElement("p", null, "Gotta burn ", React.createElement("span", null, "0.5"), "kg everyday!"), 
+        React.createElement("p", null, weightToGo, " kg to go to ", message, "!"), 
         React.createElement(Button, {bsStyle: "danger"}, "Cancel this Goal")
       )
     );

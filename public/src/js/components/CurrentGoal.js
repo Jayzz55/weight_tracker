@@ -21,18 +21,31 @@ var CurrentGoal = React.createClass({
       border: '3px solid #555'
     }
 
+    var targetDate = new Date(this.props.targetDate);
+    var startDate = new Date(this.props.startDate);
+    var timeDiffStartEnd = Math.abs(targetDate.getTime() - startDate.getTime());
+    var totalDiffDays = Math.floor(timeDiffStartEnd / (1000 * 3600 * 24)); 
+    var todayDate = new Date();
+    var timeDiffStartToday = Math.abs(todayDate.getTime() - startDate.getTime());
+    var diffDaysTilToday = Math.floor(timeDiffStartToday / (1000 * 3600 * 24));
+    var percentageDays = parseInt(diffDaysTilToday / totalDiffDays * 100,10);
+
+    var weightToGo = Math.abs(this.props.currentWeight - this.props.targetWeight);
+    var message = (this.props.currentWeight - this.props.targetWeight) > 0 ? "lose" : "gain";
+
+    console.log(percentageDays );
+
     return (
       <Well className="col-md-6 col-md-offset-3 text-center" id="current-goal">
         <h3>Current Goal:</h3>
         <hr style={hrStyle} />
-        <h3>Goal: <span>30</span>kg</h3>
-        <ProgressBar now={60} />
+        <h3>Goal: <span>{this.props.targetWeight}</span>kg</h3>
+        <ProgressBar now={percentageDays} />
         <div className="clearfix">
-          <span style={floatLeftStyle}>Start!</span>
-          <span style={floatRightStyle}>Goal!</span>
+          <span style={floatLeftStyle}>{this.props.startDate}</span>
+          <span style={floatRightStyle}>{this.props.targetDate}</span>
         </div>
-        <p>5 kg to go!</p>
-        <p>Gotta burn <span>0.5</span>kg everyday!</p>
+        <p>{weightToGo} kg to go to {message}!</p>
         <Button bsStyle='danger'>Cancel this Goal</Button>
       </Well>
     );
