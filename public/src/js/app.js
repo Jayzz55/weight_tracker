@@ -85,7 +85,7 @@ var App = React.createClass({
   getNotificationStyles: function() {
     var bar = {
       background: '#263238',
-      width: '350px',
+      width: '370px',
       height: '50px',
       fontSize: '20px'
     };
@@ -196,9 +196,19 @@ var App = React.createClass({
         this.setState({
           goalStartDate: today,
           goalEndDate: targetDate,
-          goalWeight: targetWeight,
-          notificationMessage: "Your goal has been set."
+          goalWeight: targetWeight
         });
+
+        if (targetDate){
+          this.setState({
+            notificationMessage: "Your goal has been set."
+          });
+        } else {
+          this.setState({
+            notificationMessage: "Your goal has been cancelled."
+          });
+        }
+
         this.refs.notification.show();
         console.log("success");
       }.bind(this),
@@ -221,7 +231,7 @@ var App = React.createClass({
         />
         <TodayData height={this.state.height} currentWeight={this.state.currentWeight} saveTodayWeight={this.saveTodayWeight} todayDataWeight={this.state.todayDataWeight}/>
         <SetGoal targetDate={this.state.goalEndDate} targetWeight={this.state.goalWeight} saveGoal={this.saveGoal}/>
-        <CurrentGoal startDate={this.state.goalStartDate} targetDate={this.state.goalEndDate} targetWeight={this.state.goalWeight} currentWeight={this.state.currentWeight} />
+        <CurrentGoal startDate={this.state.goalStartDate} targetDate={this.state.goalEndDate} targetWeight={this.state.goalWeight} currentWeight={this.state.currentWeight} saveGoal={this.saveGoal} />
         <Notification
           ref="notification"
           message={this.state.notificationMessage}

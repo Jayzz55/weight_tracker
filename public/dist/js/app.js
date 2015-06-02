@@ -86,7 +86,7 @@ var App = React.createClass({displayName: "App",
   getNotificationStyles: function() {
     var bar = {
       background: '#263238',
-      width: '350px',
+      width: '370px',
       height: '50px',
       fontSize: '20px'
     };
@@ -197,9 +197,19 @@ var App = React.createClass({displayName: "App",
         this.setState({
           goalStartDate: today,
           goalEndDate: targetDate,
-          goalWeight: targetWeight,
-          notificationMessage: "Your goal has been set."
+          goalWeight: targetWeight
         });
+
+        if (targetDate){
+          this.setState({
+            notificationMessage: "Your goal has been set."
+          });
+        } else {
+          this.setState({
+            notificationMessage: "Your goal has been cancelled."
+          });
+        }
+
         this.refs.notification.show();
         console.log("success");
       }.bind(this),
@@ -222,7 +232,7 @@ var App = React.createClass({displayName: "App",
         ), 
         React.createElement(TodayData, {height: this.state.height, currentWeight: this.state.currentWeight, saveTodayWeight: this.saveTodayWeight, todayDataWeight: this.state.todayDataWeight}), 
         React.createElement(SetGoal, {targetDate: this.state.goalEndDate, targetWeight: this.state.goalWeight, saveGoal: this.saveGoal}), 
-        React.createElement(CurrentGoal, {startDate: this.state.goalStartDate, targetDate: this.state.goalEndDate, targetWeight: this.state.goalWeight, currentWeight: this.state.currentWeight}), 
+        React.createElement(CurrentGoal, {startDate: this.state.goalStartDate, targetDate: this.state.goalEndDate, targetWeight: this.state.goalWeight, currentWeight: this.state.currentWeight, saveGoal: this.saveGoal}), 
         React.createElement(Notification, {
           ref: "notification", 
           message: this.state.notificationMessage, 
@@ -30963,8 +30973,80 @@ var React = require('react');
 var Button = require('react-bootstrap').Button;
 var Input = require('react-bootstrap').Input;
 var Label = require('react-bootstrap').Label;
+var Modal = require('react-bootstrap').Modal;
+var OverlayMixin = require('react-bootstrap').OverlayMixin;
 var Well = require('react-bootstrap').Well;
 var ProgressBar = require('react-bootstrap').ProgressBar;
+
+const CancelGoalModal = React.createClass({displayName: "CancelGoalModal",
+  mixins: [OverlayMixin],
+
+  handleCancelGoal(e) {
+    e.preventDefault();
+    var targetDate= null;
+    var targetWeight= null;
+    this.props.saveGoal(targetDate, targetWeight);
+    this.handleToggle();
+  },
+
+  getInitialState() {
+    return {
+      isModalOpen: false
+    };
+  },
+
+  handleToggle() {
+    this.setState({
+      isModalOpen: !this.state.isModalOpen
+    });
+  },
+
+  render() {
+
+    return (
+      React.createElement(Button, {onClick: this.handleToggle, bsStyle: "danger"}, "Cancel Goal")
+    );
+  },
+
+  // This is called by the `OverlayMixin` when this component
+  // is mounted or updated and the return value is appended to the body.
+  renderOverlay() {
+    if (!this.state.isModalOpen) {
+      return React.createElement("span", null);
+    };
+
+    var modalBodyStyle = {
+      padding: '5px'
+    };
+
+    var h3Style = {
+      display: 'inline',
+      marginLeft: '10px',
+      marginRight: '30px'
+    }
+
+    var buttonStyle = {
+      marginLeft: '10px',
+      marginRight: '10px',
+      fontSize: '20px'
+    }
+
+    return (
+      React.createElement(Modal, {title: "Cancel Goal", onRequestHide: this.handleToggle}, 
+        React.createElement("div", {className: "modal-body"}, 
+          React.createElement("div", {style: modalBodyStyle}, 
+            React.createElement("h3", {style: h3Style}, "Are you sure?"), 
+            React.createElement(Button, {style: buttonStyle, onClick: this.handleToggle}, "No"), 
+            React.createElement(Button, {style: buttonStyle, onClick: this.handleCancelGoal, bsStyle: "danger"}, "Yes")
+          )
+        ), 
+        React.createElement("div", {className: "modal-footer"}
+          
+        )
+      )
+    );
+  }
+});
 
 var CurrentGoal = React.createClass({displayName: "CurrentGoal",
   render: function() {
@@ -30978,24 +31060,36 @@ var CurrentGoal = React.createClass({displayName: "CurrentGoal",
     };
     var hrStyle= {
       border: '3px solid #555'
-    }
+    };
 
     var targetDate = new Date(this.props.targetDate);
     var startDate = new Date(this.props.startDate);
     var timeDiffStartEnd = Math.abs(targetDate.getTime() - startDate.getTime());
     var totalDiffDays = Math.floor(timeDiffStartEnd / (1000 * 3600 * 24)); 
     var todayDate = new Date();
+    todayDate.setHours(10);
     var timeDiffStartToday = Math.abs(todayDate.getTime() - startDate.getTime());
     var diffDaysTilToday = Math.floor(timeDiffStartToday / (1000 * 3600 * 24));
     var percentageDays = parseInt(diffDaysTilToday / totalDiffDays * 100,10);
 
     var weightToGo = Math.abs(this.props.currentWeight - this.props.targetWeight);
     var message = (this.props.currentWeight - this.props.targetWeight) > 0 ? "lose" : "gain";
+    var currentGoalDisplay = (this.props.targetDate) ? "block" : "none";
+
+    var wellStyle = {
+      display: currentGoalDisplay
+    };
+
+    console.log("targetDate = " + targetDate);
+    console.log("startDate = " + startDate);
+    console.log("todayDate = " + todayDate);
+    console.log("totalDiffDays = " + totalDiffDays);
+    console.log("diffDaysTilToday = " + diffDaysTilToday);
 
     console.log(percentageDays );
 
     return (
-      React.createElement(Well, {className: "col-md-6 col-md-offset-3 text-center", id: "current-goal"}, 
+      React.createElement(Well, {style: wellStyle, className: "col-md-6 col-md-offset-3 text-center", id: "current-goal"}, 
         React.createElement("h3", null, "Current Goal:"), 
         React.createElement("hr", {style: hrStyle}), 
         React.createElement("h3", null, "Goal: ", React.createElement("span", null, this.props.targetWeight), "kg"), 
@@ -31005,7 +31099,7 @@ var CurrentGoal = React.createClass({displayName: "CurrentGoal",
           React.createElement("span", {style: floatRightStyle}, this.props.targetDate)
         ), 
         React.createElement("p", null, weightToGo, " kg to go to ", message, "!"), 
-        React.createElement(Button, {bsStyle: "danger"}, "Cancel this Goal")
+        React.createElement(CancelGoalModal, {saveGoal: this.props.saveGoal})
       )
     );
   }
@@ -31077,6 +31171,7 @@ const SettingForm = React.createClass({displayName: "SettingForm",
     var targetDate= this.state.targetDate;
     var targetWeight= this.state.targetWeight;
     this.props.saveGoal(targetDate, targetWeight);
+    this.props.handleToggle();
   },
 
   render: function(){
@@ -31147,7 +31242,7 @@ const GoalModal = React.createClass({displayName: "GoalModal",
       React.createElement(Modal, {title: "Set your Goal", onRequestHide: this.handleToggle}, 
         React.createElement("div", {className: "modal-body"}, 
           React.createElement("div", {style: modalBodyStyle}, 
-            React.createElement(SettingForm, {saveGoal: this.props.saveGoal, targetDate: this.props.targetDate, targetWeight: this.props.targetWeight})
+            React.createElement(SettingForm, {handleToggle: this.handleToggle, saveGoal: this.props.saveGoal, targetDate: this.props.targetDate, targetWeight: this.props.targetWeight})
           )
         ), 
         React.createElement("div", {className: "modal-footer"}, 
@@ -31294,6 +31389,7 @@ const HeightForm = React.createClass({displayName: "HeightForm",
     e.preventDefault();
     var newHeight= this.state.height;
     this.props.updateHeight(newHeight);
+    this.props.handleToggle();
   },
 
   render: function(){
@@ -31350,7 +31446,7 @@ const UpdateHeight = React.createClass({displayName: "UpdateHeight",
     return (
       React.createElement(Modal, {title: "Height update", onRequestHide: this.handleToggle}, 
         React.createElement("div", {className: "modal-body", style: modalBodyStyle}, 
-          React.createElement(HeightForm, {height: this.props.height, updateHeight: this.props.updateHeight})
+          React.createElement(HeightForm, {handleToggle: this.handleToggle, height: this.props.height, updateHeight: this.props.updateHeight})
         ), 
         React.createElement("div", {className: "modal-footer"}, 
           React.createElement(Button, {onClick: this.handleToggle}, "Close")

@@ -33,6 +33,7 @@ const SettingForm = React.createClass({
     var targetDate= this.state.targetDate;
     var targetWeight= this.state.targetWeight;
     this.props.saveGoal(targetDate, targetWeight);
+    this.props.handleToggle();
   },
 
   render: function(){
@@ -103,7 +104,7 @@ const GoalModal = React.createClass({
       <Modal title='Set your Goal' onRequestHide={this.handleToggle}>
         <div className='modal-body'>
           <div style={modalBodyStyle} >
-            <SettingForm saveGoal={this.props.saveGoal} targetDate={this.props.targetDate} targetWeight={this.props.targetWeight} />
+            <SettingForm handleToggle={this.handleToggle} saveGoal={this.props.saveGoal} targetDate={this.props.targetDate} targetWeight={this.props.targetWeight} />
           </div>
         </div>
         <div className='modal-footer'>

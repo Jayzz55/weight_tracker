@@ -25,6 +25,7 @@ const HeightForm = React.createClass({
     e.preventDefault();
     var newHeight= this.state.height;
     this.props.updateHeight(newHeight);
+    this.props.handleToggle();
   },
 
   render: function(){
@@ -81,7 +82,7 @@ const UpdateHeight = React.createClass({
     return (
       <Modal title="Height update" onRequestHide={this.handleToggle}>
         <div className='modal-body' style={modalBodyStyle}>
-          <HeightForm height={this.props.height} updateHeight={this.props.updateHeight} />
+          <HeightForm handleToggle={this.handleToggle} height={this.props.height} updateHeight={this.props.updateHeight} />
         </div>
         <div className='modal-footer'>
           <Button onClick={this.handleToggle}>Close</Button>
