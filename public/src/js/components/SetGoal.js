@@ -9,6 +9,25 @@ var OverlayMixin = require('react-bootstrap').OverlayMixin;
 
 const SettingForm = React.createClass({
 
+  getInitialState: function() {
+    return {
+      targetDate: this.props.targetDate,
+      targetWeight: this.props.targetWeight
+    };
+  },
+
+  handleDateChange: function(e){
+    this.setState({
+      targetDate: e.target.value
+    });
+  },
+
+  handleWeightChange: function(e){
+    this.setState({
+      targetWeight: e.target.value
+    });
+  },
+
   handleSaveGoal: function(e){
     e.preventDefault();
     var targetDate= this.refs.targetDate.getDOMNode().value;
@@ -27,9 +46,9 @@ const SettingForm = React.createClass({
     return(
       <form className='form-horizontal'>
         <label className='col-xs-2'>Target Date</label>
-        <input className='col-xs-10' style={inputStyle} ref="targetDate" type="date" />
+        <input onChange={this.handleDateChange} className='col-xs-10' style={inputStyle} type="date" value={this.state.targetDate}/>
         <label className='col-xs-2'>Target Weight (kg)</label>
-        <input className='col-xs-10' style={inputStyle} ref="targetWeight" type="number" step="0.1" />
+        <input onChange={this.handleWeightChange} className='col-xs-10' style={inputStyle} ref="targetWeight" type="number" step="0.1" value={this.state.targetWeight}/>
         <Button onClick={this.handleSaveGoal} className='col-xs-offset-2 col-xs-10' bsStyle='primary'>Set!</Button>
       </form>
     )
@@ -80,7 +99,7 @@ const GoalModal = React.createClass({
       <Modal title='Set your Goal' onRequestHide={this.handleToggle}>
         <div className='modal-body'>
           <div style={modalBodyStyle} >
-            <SettingForm saveGoal={this.props.saveGoal} />
+            <SettingForm saveGoal={this.props.saveGoal} targetDate={this.props.targetDate} targetWeight={this.props.targetWeight} />
           </div>
         </div>
         <div className='modal-footer'>
@@ -97,7 +116,7 @@ var SetGoal = React.createClass({
 
     return (
       <div className="col-md-6 col-md-offset-3 text-center">
-        <GoalModal saveGoal={this.props.saveGoal} />
+        <GoalModal saveGoal={this.props.saveGoal} targetDate={this.props.targetDate} targetWeight={this.props.targetWeight} />
       </div>
     );
   }

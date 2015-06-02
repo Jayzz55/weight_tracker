@@ -33,6 +33,7 @@ var CurrentGoal = React.createClass({
         </div>
         <p>5 kg to go!</p>
         <p>Gotta burn <span>0.5</span>kg everyday!</p>
+        <Button bsStyle='danger'>Cancel this Goal</Button>
       </Well>
     );
   }

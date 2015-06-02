@@ -220,7 +220,7 @@ var App = React.createClass({
           weightLog={this.state.weightLog}
         />
         <TodayData height={this.state.height} currentWeight={this.state.currentWeight} saveTodayWeight={this.saveTodayWeight} todayDataWeight={this.state.todayDataWeight}/>
-        <SetGoal saveGoal={this.saveGoal}/>
+        <SetGoal targetDate={this.state.goalEndDate} targetWeight={this.state.goalWeight} saveGoal={this.saveGoal}/>
         <CurrentGoal />
         <Notification
           ref="notification"

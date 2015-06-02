@@ -221,7 +221,7 @@ var App = React.createClass({displayName: "App",
           weightLog: this.state.weightLog}
         ), 
         React.createElement(TodayData, {height: this.state.height, currentWeight: this.state.currentWeight, saveTodayWeight: this.saveTodayWeight, todayDataWeight: this.state.todayDataWeight}), 
-        React.createElement(SetGoal, {saveGoal: this.saveGoal}), 
+        React.createElement(SetGoal, {targetDate: this.state.goalEndDate, targetWeight: this.state.goalWeight, saveGoal: this.saveGoal}), 
         React.createElement(CurrentGoal, null), 
         React.createElement(Notification, {
           ref: "notification", 
@@ -30991,7 +30991,8 @@ var CurrentGoal = React.createClass({displayName: "CurrentGoal",
           React.createElement("span", {style: floatRightStyle}, "Goal!")
         ), 
         React.createElement("p", null, "5 kg to go!"), 
-        React.createElement("p", null, "Gotta burn ", React.createElement("span", null, "0.5"), "kg everyday!")
+        React.createElement("p", null, "Gotta burn ", React.createElement("span", null, "0.5"), "kg everyday!"), 
+        React.createElement(Button, {bsStyle: "danger"}, "Cancel this Goal")
       )
     );
   }
@@ -31039,6 +31040,25 @@ var OverlayMixin = require('react-bootstrap').OverlayMixin;
 
 const SettingForm = React.createClass({displayName: "SettingForm",
 
+  getInitialState: function() {
+    return {
+      targetDate: this.props.targetDate,
+      targetWeight: this.props.targetWeight
+    };
+  },
+
+  handleDateChange: function(e){
+    this.setState({
+      targetDate: e.target.value
+    });
+  },
+
+  handleWeightChange: function(e){
+    this.setState({
+      targetWeight: e.target.value
+    });
+  },
+
   handleSaveGoal: function(e){
     e.preventDefault();
     var targetDate= this.refs.targetDate.getDOMNode().value;
@@ -31057,9 +31077,9 @@ const SettingForm = React.createClass({displayName: "SettingForm",
     return(
       React.createElement("form", {className: "form-horizontal"}, 
         React.createElement("label", {className: "col-xs-2"}, "Target Date"), 
-        React.createElement("input", {className: "col-xs-10", style: inputStyle, ref: "targetDate", type: "date"}), 
+        React.createElement("input", {onChange: this.handleDateChange, className: "col-xs-10", style: inputStyle, type: "date", value: this.state.targetDate}), 
         React.createElement("label", {className: "col-xs-2"}, "Target Weight (kg)"), 
-        React.createElement("input", {className: "col-xs-10", style: inputStyle, ref: "targetWeight", type: "number", step: "0.1"}), 
+        React.createElement("input", {onChange: this.handleWeightChange, className: "col-xs-10", style: inputStyle, ref: "targetWeight", type: "number", step: "0.1", value: this.state.targetWeight}), 
         React.createElement(Button, {onClick: this.handleSaveGoal, className: "col-xs-offset-2 col-xs-10", bsStyle: "primary"}, "Set!")
       )
     )
@@ -31110,7 +31130,7 @@ const GoalModal = React.createClass({displayName: "GoalModal",
       React.createElement(Modal, {title: "Set your Goal", onRequestHide: this.handleToggle}, 
         React.createElement("div", {className: "modal-body"}, 
           React.createElement("div", {style: modalBodyStyle}, 
-            React.createElement(SettingForm, {saveGoal: this.props.saveGoal})
+            React.createElement(SettingForm, {saveGoal: this.props.saveGoal, targetDate: this.props.targetDate, targetWeight: this.props.targetWeight})
           )
         ), 
         React.createElement("div", {className: "modal-footer"}, 
@@ -31127,7 +31147,7 @@ var SetGoal = React.createClass({displayName: "SetGoal",
 
     return (
       React.createElement("div", {className: "col-md-6 col-md-offset-3 text-center"}, 
-        React.createElement(GoalModal, {saveGoal: this.props.saveGoal})
+        React.createElement(GoalModal, {saveGoal: this.props.saveGoal, targetDate: this.props.targetDate, targetWeight: this.props.targetWeight})
       )
     );
   }
@@ -31247,14 +31267,6 @@ const HeightForm = React.createClass({displayName: "HeightForm",
     };
   },
 
-  componentWillReceiveProps: function(nextProps) {
-    console.log(nextProps);
-    console.log(this.props.height);
-    this.setState({
-      height: nextProps.height
-    });
-  },
-
   handleChange: function(e){
     this.setState({
       height: e.target.value
@@ -31263,13 +31275,11 @@ const HeightForm = React.createClass({displayName: "HeightForm",
 
   handleUpdateHeight: function(e){
     e.preventDefault();
-    // var newHeight= this.refs.height.getDOMNode().value;
     var newHeight= this.state.height;
     this.props.updateHeight(newHeight);
   },
 
   render: function(){
-    console.log(this.props.height);
 
     var inputStyle = {
       width: '83%',
