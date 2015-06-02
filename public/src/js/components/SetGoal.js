@@ -30,8 +30,8 @@ const SettingForm = React.createClass({
 
   handleSaveGoal: function(e){
     e.preventDefault();
-    var targetDate= this.refs.targetDate.getDOMNode().value;
-    var targetWeight= this.refs.targetWeight.getDOMNode().value;
+    var targetDate= this.state.targetDate;
+    var targetWeight= this.state.targetWeight;
     this.props.saveGoal(targetDate, targetWeight);
   },
 
@@ -71,6 +71,10 @@ const GoalModal = React.createClass({
   },
 
   render() {
+
+    var buttonText = (this.props.targetDate) ? "Edit Goal" : "Set a Goal!";
+    var buttonColor = (this.props.targetDate) ? "default" : "danger";
+
     var buttonStyle = {
       width: '100%',
       fontSize: '30px',
@@ -79,7 +83,7 @@ const GoalModal = React.createClass({
     };
 
     return (
-      <Button style={buttonStyle} onClick={this.handleToggle} bsStyle='danger' id="set-goal-btn">Set a Goal!</Button>
+      <Button style={buttonStyle} onClick={this.handleToggle} bsStyle={buttonColor} id="set-goal-btn">{buttonText}</Button>
     );
   },
 
