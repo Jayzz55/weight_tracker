@@ -31240,13 +31240,36 @@ var OverlayMixin = require('react-bootstrap').OverlayMixin;
 var LineChart = require("react-chartjs").Line;
 
 const HeightForm = React.createClass({displayName: "HeightForm",
+
+  getInitialState: function() {
+    return {
+      height: this.props.height
+    };
+  },
+
+  componentWillReceiveProps: function(nextProps) {
+    console.log(nextProps);
+    console.log(this.props.height);
+    this.setState({
+      height: nextProps.height
+    });
+  },
+
+  handleChange: function(e){
+    this.setState({
+      height: e.target.value
+    });
+  },
+
   handleUpdateHeight: function(e){
     e.preventDefault();
-    var newHeight= this.refs.height.getDOMNode().value;
+    // var newHeight= this.refs.height.getDOMNode().value;
+    var newHeight= this.state.height;
     this.props.updateHeight(newHeight);
   },
 
   render: function(){
+    console.log(this.props.height);
 
     var inputStyle = {
       width: '83%',
@@ -31258,7 +31281,7 @@ const HeightForm = React.createClass({displayName: "HeightForm",
       React.createElement("form", {className: "form-horizontal"}, 
 
         React.createElement("label", {className: "col-xs-2"}, "height (m)"), 
-        React.createElement("input", {className: "col-xs-10", style: inputStyle, ref: "height", type: "number", step: "0.01", placeholder: this.props.height}), 
+        React.createElement("input", {onChange: this.handleChange, className: "col-xs-10", style: inputStyle, type: "number", step: "0.01", value: this.state.height}), 
         React.createElement(Button, {onClick: this.handleUpdateHeight, className: "col-xs-offset-2 col-xs-10", bsStyle: "primary"}, "Update")
       )
     )
