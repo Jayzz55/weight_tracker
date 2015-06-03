@@ -31536,7 +31536,7 @@ var Welcome = React.createClass({displayName: "Welcome",
         React.createElement("h2", null, "Welcome"), 
         React.createElement("h3", null, this.props.name), 
         React.createElement("p", null, "Height: ", React.createElement("span", null, this.props.height), " ", React.createElement(UpdateHeight, {height: this.props.height, updateHeight: this.props.updateHeight})), 
-        React.createElement("p", null, "weight record ", React.createElement(WeightChart, {dateLog: this.props.dateLog, weightLog: this.props.weightLog}), " ")
+        React.createElement("p", null, "Your weight journal ", React.createElement(WeightChart, {dateLog: this.props.dateLog, weightLog: this.props.weightLog}), " ")
       )
     );
   }
