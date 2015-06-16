@@ -40,5 +40,13 @@ gulp.task('watch', function() {
   gulp.watch(['./public/src/scss/*.scss'],['sass']);
 });
 
+gulp.task('uncss', function() {
+  return gulp.src('./css/bootstrap.min.css')
+    .pipe(uncss({
+        html: ['index.html']
+    }))
+    .pipe(gulp.dest('./public/css/out'));
+});
+
 gulp.task('default', ['server','watch']);
 

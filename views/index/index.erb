@@ -1,69 +1,90 @@
-<div class="slides-container">
-  <div class="slide" id="slide-1">
-    <div class="centered" id="title">
-      <h1>Weight Tracker</h1>
-      <h2>Track your weights and get FIT.</h2>
-      <% if logged_in? %>
-        <p> Welcome back to your <a href="/app"><%= current_budget.title %></a> 
-          <form action="/session" method="post">
-            <input type="hidden" name="_method" value="delete">
-            <div class="index-button">
-              <button>Log out</button>
-            </div>
-          </form>
+<!--navigation -->
+<!-- Static navbar -->
+<div class="navbar navbar-default navbar-static-top yamm sticky" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Weight Tracker</a>
+    </div>
+    <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav navbar-right">
+      <!--menu login li start here-->
+        <li class="dropdown">
+          <a href="#" class=" dropdown-toggle" data-toggle="dropdown">Sign in</a>
+          <div class="dropdown-menu dropdown-menu-right dropdown-login-box animated fadeInUp">
+            <%= erb :'partials/sign_in_form', :layout => false %>
+          </div>
+        </li> <!--menu login li end here-->
+
+        <!--menu sign up li start here-->
+        <li class="dropdown">
+          <a href="#" class=" dropdown-toggle" data-toggle="dropdown">Sign up</a>
+          <div class="dropdown-menu dropdown-menu-right dropdown-login-box animated fadeInUp">
+            <%= erb :'partials/sign_up_form', :layout => false %>
+          </div>
+        </li> <!--menu sign up li end here-->
+
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--container-->
+</div><!--navbar-default-->
+
+<!--parallax background no slider-->
+<section id="home-parallax" class="parallax" data-stellar-background-ratio="0.5">
+  <div class="container text-center">
+    <h1 class="typed-text">Weight Tracker helps you become<br/> 
+    <span class="element" data-elements="Fit, Healthy, Amazing, Kickass"></span>
+    </h1>
+    <p class="lead"><strong>A simple app that helps you keep track of your weight</strong></p>
+    <span class="parallax-buttons">
+      <span>
+        <!--sign in button-->
+        <%= erb :'partials/sign_in_modal_form', :layout => false %>
+      </span>
+      
+      <span>
+        <!--sign up button-->
+        <%= erb :'partials/sign_up_modal_form', :layout => false %>
+      </span>
+      
+    </span>
+  </div>
+</section><!--parallax-background-->
+
+<div class="intro-text-1">
+  <div class="container">
+    <div class="row text-center">
+        <h4 class="animated slideInDown">WEIGHT TRACKER
+        </h4>
+        <p>
+          Your simple weight journal tracker.
+        </p>                   
+    </div>
+  </div>
+</div> <!--intro text end-->
+
+<div class="divide70"></div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-8 col-sm-offset-2">
+      <div class="center-heading">
+        <h2 class="wow animated fadeIn" data-wow-duration="700ms" data-wow-delay="100ms">Welcome to WEIGHT TRACKER</h2>
+        <span class="center-line"></span>
+        <p class="sub-text wow animated fadeIn" data-wow-duration="700ms" data-wow-delay="300ms">
+          We want to present you a simple and and easy to use weight tracker tool that keeps track of your weight daily like a journal. You can set a goal and check your current BMI. WEIGHT TRACKER also show you the history data that you can visually see your progress and help you manage your weight more effectively.
         </p>
-      <% else %>
-        <nav class="sign-up"><a href="#slide-3">Try Me!</a></nav>
-        <nav class="sign-in"><a href="#slide-2">Log in</a></nav>
-      <% end %>
-    </div>
-  </div>
-
-  <div class="slide" id="slide-2">
-    <div class="centered">
-      <h1>Log in</h1>
-      <p>
-        <form action="/session" method="post">
-          <div class="budget-title">
-            <label for="name">Your name</label>
-            <input type="text" name="name">
-          </div>
-          <div class="budget-password">
-            <label for="password">password</label>
-            <input type="password" name="password">
-          </div>
-          <div class="index-button">
-            <button><nav class="sign-in"><a href="#slide-2">Log in</a></nav></button>
-          </div>
-        </form>
-      </p>
-      <nav class="button"><a href="#slide-1">Back</a></nav>
-
-    </div>
-  </div>
-
-  <div class="slide" id="slide-3">
-    <div class="centered">
-      <h1>Create your budget</h1>
-      <form action="/users" method="post">
-        <div class="budget-title">
-          <label for="name">Your name</label>
-          <input type="text" name="name">
-        </div>
-        <div class="budget-password">
-          <label for="password">password</label>
-          <input type="password" name="password">
-        </div>
-        <div class="budget-budget">
-          <label for="height">Height</label>
-          <input type="number" step="0.01" name="height">
-        </div>
-        <div class="index-button">
-          <button class="sign-up">Create</button>
-        </div>
-      </form>
-      <nav class="button"><a href="#slide-1">Back</a></nav>
+      </div>
     </div>
   </div>
 </div>
 
+
+
+
+        
