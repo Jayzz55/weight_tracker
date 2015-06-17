@@ -1,0 +1,671 @@
+/* 
+    Document   : assan
+    Author     : Design_mylife
+    Description:assan multi-page for Multipurpose use
+    Version    : V1.6
+*/
+
+@import "http://fonts.googleapis.com/css?family=Raleway:400,800,700,600,500";
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  font-family: "Open Sans", sans-serif;
+  color: #424242;
+  font-size: 14px;
+  line-height: 24px;
+  background-color: #fff;
+}
+
+/*
+/*-----------------------------------------------------------------------------------*/
+
+/*	RESET
+/*-----------------------------------------------------------------------------------*/
+
+*,
+*:before,
+*:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+:focus {
+  outline: 0 !important;
+}
+
+::selection {
+  background: #fefac7;
+  /* Safari */
+  color: #555555;
+}
+
+::-moz-selection {
+  background: #fefac7;
+  /* Firefox */
+  color: #555555;
+}
+
+strong {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 700;
+}
+
+input,
+button {
+  font-family: "Open Sans", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+a {
+  color: #333;
+  -moz-transition: all 200ms ease-in;
+  -o-transition: all 200ms ease-in;
+  -webkit-transition: all 200ms ease-in;
+  transition: all 200ms ease-in;
+}
+
+a:hover,
+a:focus {
+  color: #4f82e9;
+  text-decoration: none;
+}
+
+/* Headings */
+
+h1,
+h2,
+h4 {
+  color: #060606;
+  font-weight: 700;
+  margin: 0;
+  font-family: 'Raleway', sans-serif;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 44px;
+  margin: 0 0 44px 0;
+}
+
+h2 {
+  font-size: 2.6em;
+  font-weight: 700;
+  line-height: 42px;
+  margin: 0 0 32px 0;
+}
+
+/*use in section headings*/
+
+h4 {
+  font-size: 1.4em;
+  font-weight: 700;
+  letter-spacing: normal;
+  line-height: 27px;
+  margin: 0 0 14px 0;
+}
+
+/*parahraphs*/
+
+p {
+  color: #555;
+  line-height: 24px;
+  margin: 0 0 20px;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 400;
+}
+
+p.sub-text {
+  font-style: normal;
+  font-size: 18px;
+  line-height: 29px;
+  font-weight: 400;
+  color: #555;
+}
+
+/*******section heading**********/
+
+.center-heading {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.center-heading h2 {
+  margin-bottom: 0;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #333;
+  font-size: 30px;
+}
+
+.center-heading p {
+  font-size: 18px;
+}
+
+.center-line {
+  display: inline-block;
+  width: 70px;
+  height: 1px;
+  border-top: 1px solid #bbb;
+  /* border-bottom: 1px solid $skincolor; */
+  margin: auto;
+}
+
+.center-heading p {
+  margin-top: 10px;
+}
+
+/*-----------------------------------------------------------------------------------*/
+
+/*	DIVIDERS
+/*-----------------------------------------------------------------------------------*/
+
+.divide70 {
+  width: 100%;
+  height: 70px;
+}
+
+/*margins*/
+
+/***********bootstrap navigation default overrides--*/
+
+.navbar-default {
+  font-family: "Open Sans", sans-serif;
+  border: none;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  -ms-border-radius: 0px;
+  border-radius: 0px;
+  margin-bottom: 0;
+  width: 100%;
+  min-height: 70px;
+  padding: 10px 0;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.11765) 0px 1px 3px;
+  -moz-box-shadow: rgba(0, 0, 0, 0.11765) 0px 1px 3px;
+  -ms-box-shadow: rgba(0, 0, 0, 0.11765) 0px 1px 3px;
+  box-shadow: rgba(0, 0, 0, 0.11765) 0px 1px 3px;
+  background-color: rgba(255, 255, 255, 0.9);
+  clear: both;
+  -moz-transition: all 0.4s ease-in-out;
+  -o-transition: all 0.4s ease-in-out;
+  -webkit-transition: all 0.4s ease-in-out;
+  transition: all 0.4s ease-in-out;
+}
+
+.navbar-brand {
+  font-weight: 700;
+  color: #000 !important;
+  font-size: 30px;
+  line-height: 20px;
+  font-style: normal;
+  text-transform: uppercase;
+}
+
+.navbar-default .navbar-nav > li > a {
+  color: #444;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0px;
+  text-transform: uppercase;
+  font-family: 'Raleway', sans-serif;
+}
+
+.navbar-default .navbar-nav > li > a:hover {
+  color: #4f82e9;
+}
+
+/*============================*/
+
+/*======dropdowm menu=========*/
+
+/*============================*/
+
+.navbar .dropdown-menu {
+  padding: 0px;
+  margin: 0;
+  min-width: 210px;
+  background-color: #fff;
+  border: 0;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  -ms-border-radius: 0px;
+  border-radius: 0px;
+  border: 1px solid #ddd;
+}
+
+/*********************
+
+TOP BARS
+
+****************************/
+
+/* Mega MENU */
+
+/*navbar search form***/
+
+/***header top bar with search***/
+
+/*************************************************************/
+
+/************************** Buttons **************************/
+
+/*************************************************************/
+
+.btn {
+  font-weight: 600;
+  letter-spacing: 0px;
+  font-family: 'Raleway', sans-serif;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+.btn-lg {
+  padding: 14px 28px 13px 28px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.btn:focus,
+.btn:hover {
+  outline: 0;
+  color: #fff;
+}
+
+.btn-theme-bg {
+  border-color: #4f82e9;
+  color: #fff;
+  background-color: #4f82e9;
+  -webkit-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.2);
+  -ms-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+.btn-theme-bg:hover {
+  background-color: #333;
+  border-color: #333;
+}
+
+/*********border-buttons**********/
+
+.border-theme {
+  border: 1px solid #4f82e9;
+  color: #4f82e9;
+  -webkit-box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+  -ms-box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.border-theme:hover {
+  background-color: #4f82e9;
+  border-color: #4f82e9;
+  color: #fff;
+}
+
+/************************image hover effect*******************/
+
+/*forms*/
+
+input[type="text"],
+input[type="password"],
+.form-control {
+  border: 1px solid #ddd;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  -ms-border-radius: 0;
+  border-radius: 0;
+  font-size: 12px;
+  color: #7a7a7a;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  -ms-box-shadow: none;
+  box-shadow: none;
+  background: #FFF;
+  -moz-transition: all 200ms ease-in;
+  -o-transition: all 200ms ease-in;
+  -webkit-transition: all 200ms ease-in;
+  transition: all 200ms ease-in;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+.form-control:focus {
+  border-color: #bbb;
+  background: #FFF;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  -ms-box-shadow: none;
+  box-shadow: none;
+}
+
+/*************parallax*************/
+
+.parallax {
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+  width: 100%;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+/*carousel slider*/
+
+/*flex slider*/
+
+/***********animation delays*****************/
+
+/*intro text*/
+
+/*******************home parallax-bg----***********************/
+
+#home-parallax {
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url("../img/fit-small.jpg") no-repeat;
+  background-size: cover;
+  padding: 190px 0;
+}
+
+#home-parallax .border-theme {
+  background-color: #4f82e9;
+  border-color: #4f82e9;
+  color: #fff;
+}
+
+#home-parallax .border-theme:hover {
+  background-color: #2B3FA1;
+  border-color: #4f82d5;
+  color: #fff;
+}
+
+.parallax-buttons {
+  display: block;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.parallax-buttons a {
+  display: inline-block;
+  margin: 5px;
+}
+
+h1.typed-text {
+  color: #fff;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+.typed-text .element {
+  color: #4f82e9;
+}
+
+#home-parallax p {
+  color: #fff;
+}
+
+@media (max-width: 568px) {
+  h1.typed-text {
+    font-size: 25px;
+  }
+}
+
+/*services*/
+
+/*services 2*/
+
+/***services3***/
+
+/***special features***/
+
+/****services new*****/
+
+/***colored boxed**************/
+
+/**************work and portfolio whole*******/
+
+/* mouse grab icon */
+
+/****progress bars****/
+
+/*progress bar*/
+
+/*news and blogs*/
+
+/*latest news in home option*/
+
+/**blog inner pages**/
+
+/*Timeline blog
+------------------------------------*/
+
+/*testimonials parallax*/
+
+/**owl**/
+
+/*********************testmonials v-2*****************/
+
+/***********bootstrap collapse overrides*/
+
+/************************************************* css for footers****************************************/
+
+/* #footer is by default*/
+
+/****************footer 2****************/
+
+/************twitter feed*****************/
+
+/*************soical icons**********/
+
+/**************coming soon*************/
+
+/*purchase section*/
+
+/****fun facts*****/
+
+/******owl carousel*******/
+
+/**********static background with transparent header*/
+
+/****************************breadcrumb***************************/
+
+/***list of highlight**/
+
+/************team section css here*****/
+
+/**team-v2**/
+
+/******************pricing table***********************/
+
+/***************about me*********************/
+
+/**dropcaps**/
+
+/*contact us*/
+
+/*gmap*/
+
+/***error page****/
+
+/********************************sidebar***********************/
+
+/****************testimonials***********************/
+
+/***********************sign in or sign up css****************/
+
+/****clients***/
+
+/*****accordions****/
+
+/*** Accordion ***/
+
+/****************elements******************/
+
+/*****************bootstrap tabs overrides*****************************/
+
+/*tabs*/
+
+/***************************video home********************/
+
+/*****************home ********
+******************************/
+
+/*.parallax-overlay{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url(../img/pattern.png);
+    background-repeat: repeat;
+    background-color: rgba(44,62,80,0.3);
+    z-index: 2;
+}*/
+
+/****************************************************************
+
+Version v1.1 css*
+
+****************************************************************/
+
+/**********************sidenav*********************/
+
+/*************pagination***********/
+
+/****************************dark heder********************/
+
+/***********bootstrap navigation default overrides--*/
+
+/******************transparent header*****************************/
+
+/****************header center*****************/
+
+/*****************search results*******************/
+
+/*-----------------------------------------------------------------------------------*/
+
+/*	Process
+/*-----------------------------------------------------------------------------------*/
+
+/*******************Process inline*****/
+
+/**********************invoice page************************/
+
+@media (min-width: 768px) {
+  .navbar-right .dropdown-menu {
+    right: 0;
+    left: auto;
+    top: 60px;
+  }
+}
+
+/*******************footer 3********************/
+
+/****************login register calssic****************/
+
+/************maintenance page***************/
+
+/****dropdown login***/
+
+.dropdown-login-box {
+  overflow: hidden;
+  padding: 15px !important;
+  min-width: 300px !important;
+  background-color: #fff !important;
+}
+
+.dropdown-login-box .btn {
+  margin-top: 10px;
+}
+
+.dropdown-login-box h4 {
+  margin: 5px 0 10px 0;
+}
+
+/************************************ version v1.2.1 css *****************/
+
+/***home boxed***/
+
+/********************
+
+VERSION V1.3 css start here
+
+*************************************************/
+
+/******************
+
+MULTI LEVEL DROPDOWN CSS
+
+*********************/
+
+/*******************new contact pages************************/
+
+/*******************dark dropdown code here*****************/
+
+/***************************************************************************************
+
+ASSAN SHOP CSS STARTS FROM BELOW
+
+****************************************************************************************/
+
+/***shop footer****/
+
+/**shop services***/
+
+/****shop breadcrumb****/
+
+/***product***/
+
+/************cart***************/
+
+/*****sky login register form****/
+
+/**************intro text**************/
+
+.intro-text-1 {
+  background: #05101b;
+  padding: 40px 0;
+}
+
+.intro-text-1 h4 {
+  color: #fff;
+  font-size: 20px;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.intro-text-1 p {
+  font-size: 16px;
+  font-weight: 400;
+  color: #999;
+}
+
+/*******************portfolio with new hover style********************/
+
+/***theme features box***/
+
+/************************home events**********************/
+
+/***schedule**/
+
+/************no space columns end******/
+
+/****massonary****/
+
+/*************NEW PORTFOLIO IN V1.4****************/
+
+/***new icon overlay***/
+
+/***offcanvas css*****/
+
+/*Second level menu items*/
+
+/****construction page css***/
+
+/****cube portfolio*******/
+
+/*# sourceMappingURL=style.css.map */

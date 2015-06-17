@@ -41,7 +41,7 @@ gulp.task('watch', function() {
 });
 
 gulp.task('uncss', function() {
-  return gulp.src('./css/bootstrap.min.css')
+  return gulp.src('./public/css/lib/font-awesome.min.css')
     .pipe(uncss({
         html: ['index.html']
     }))
