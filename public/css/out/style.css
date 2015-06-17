@@ -1,10 +1,3 @@
-/* 
-    Document   : assan
-    Author     : Design_mylife
-    Description:assan multi-page for Multipurpose use
-    Version    : V1.6
-*/
-
 @import "http://fonts.googleapis.com/css?family=Raleway:400,800,700,600,500";
 
 body {
@@ -365,7 +358,7 @@ input[type="password"]:focus,
 /*******************home parallax-bg----***********************/
 
 #home-parallax {
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url("../img/fit-small.jpg") no-repeat;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url("/img/fit-small.jpg") no-repeat;
   background-size: cover;
   padding: 190px 0;
 }
