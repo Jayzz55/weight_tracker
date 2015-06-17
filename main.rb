@@ -6,7 +6,6 @@ require 'bcrypt'
 require './models/user'
 require './models/weight'
 require './config'
-require 'pry'
 
 enable :sessions
 set :session_secret, 'This is a secret key'
