@@ -64,7 +64,7 @@ const UpdateHeight = React.createClass({
 
   render() {
     return (
-      <Button onClick={this.handleToggle} >Update</Button>
+      <Button id="update-btn" onClick={this.handleToggle} >Update</Button>
     );
   },
 
@@ -109,7 +109,7 @@ const WeightChart = React.createClass({
 
   render() {
     return (
-      <Button onClick={this.handleToggle} bsStyle='info'>View</Button>
+      <Button id="view-btn" onClick={this.handleToggle} bsStyle='info'>View</Button>
     );
   },
 
@@ -166,9 +166,9 @@ var Welcome = React.createClass({
     return (
       <div className="col-md-6 col-md-offset-3 text-center">
         <h2>Welcome</h2>
-        <h3>{this.props.name}</h3>
-        <p>Height: <span>{this.props.height}</span> <UpdateHeight height={this.props.height} updateHeight={this.props.updateHeight} /></p>
-        <p>Your weight journal <WeightChart dateLog={this.props.dateLog} weightLog={this.props.weightLog} /> </p>
+        <h3 id="name">{this.props.name}</h3>
+        <p id="user-data">Height: <span>{this.props.height}</span> <UpdateHeight height={this.props.height} updateHeight={this.props.updateHeight} /></p>
+        <p id="user-data">Your weight journal <WeightChart dateLog={this.props.dateLog} weightLog={this.props.weightLog} /> </p>
       </div>
     );
   }

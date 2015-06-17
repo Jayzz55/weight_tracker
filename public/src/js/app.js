@@ -17,7 +17,7 @@ var App = React.createClass({
   },
 
   todayDay: function(){
-    return new Date().getDay();
+    return new Date().getDate();
   },
 
   getInitialState: function() {
@@ -80,6 +80,9 @@ var App = React.createClass({
 
   doSomething: function(){
     console.log(this.state);
+    console.log(this.isTodayDataRecorded());
+    console.log(this.state.dateLog[this.state.dateLog.length - 1]);
+    console.log(this.todayYear()+'-'+this.todayMonth()+'-'+this.todayDay() );
   },
 
   getNotificationStyles: function() {
@@ -219,8 +222,8 @@ var App = React.createClass({
   render: function(){
 
     return (
-      <div>
-        <button onClick={this.doSomething}>Get State</button>
+      <div className="container" id="app">
+        <button id="debug-btn" onClick={this.doSomething}>Get State</button>
         <Menu />
         <Welcome 
           name={this.state.userName}

@@ -18,7 +18,7 @@ var App = React.createClass({displayName: "App",
   },
 
   todayDay: function(){
-    return new Date().getDay();
+    return new Date().getDate();
   },
 
   getInitialState: function() {
@@ -81,6 +81,9 @@ var App = React.createClass({displayName: "App",
 
   doSomething: function(){
     console.log(this.state);
+    console.log(this.isTodayDataRecorded());
+    console.log(this.state.dateLog[this.state.dateLog.length - 1]);
+    console.log(this.todayYear()+'-'+this.todayMonth()+'-'+this.todayDay() );
   },
 
   getNotificationStyles: function() {
@@ -220,8 +223,8 @@ var App = React.createClass({displayName: "App",
   render: function(){
 
     return (
-      React.createElement("div", null, 
-        React.createElement("button", {onClick: this.doSomething}, "Get State"), 
+      React.createElement("div", {className: "container", id: "app"}, 
+        React.createElement("button", {id: "debug-btn", onClick: this.doSomething}, "Get State"), 
         React.createElement(Menu, null), 
         React.createElement(Welcome, {
           name: this.state.userName, 
@@ -31125,7 +31128,7 @@ var Menu = React.createClass({displayName: "Menu",
       React.createElement("div", {className: "col-xs-5 col-xs-offset-7"}, 
         React.createElement("form", {action: "/session", method: "post"}, 
           React.createElement("input", {type: "hidden", name: "_method", value: "delete"}), 
-          React.createElement("button", {className: "btn btn-danger"}, "Log out")
+          React.createElement("button", {className: "btn btn-danger pull-right"}, "Log out")
         )
       )
     );
@@ -31342,7 +31345,7 @@ var TodayData = React.createClass({displayName: "TodayData",
     } else if (userBMI > 25) {
       userBMIText = "Overweight";
       userBMILabel = 'danger';
-    } else if(userBMI > 20 && userBMI < 25) {
+    } else if(userBMI >= 20 && userBMI <= 25) {
       userBMIText = "Ideal";
       userBMILabel = 'success';
     }
@@ -31351,12 +31354,12 @@ var TodayData = React.createClass({displayName: "TodayData",
       React.createElement("div", {className: "col-md-6 col-md-offset-3 text-center"}, 
         React.createElement("h3", null, "Today (", date + '/' + month + '/' + year, ") data:"), 
         React.createElement("hr", null), 
-        React.createElement("p", {style: infoStyle}, "Today recorded data: ", this.props.todayDataWeight, " kg"), 
-        React.createElement("label", {style: labelStyle, className: "col-xs-2"}, "Weight:"), 
-        React.createElement("input", {onChange: this.handleChange, style: inputStyle, className: "col-xs-8", type: "text", value: this.state.inputValue}), 
-        React.createElement(Button, {onClick: this.handleSave, className: "col-xs-2"}, buttonText), 
-        React.createElement("p", {style: infoBMIStyle}, "Today BMI: ", React.createElement("span", null, userBMI)), 
-        React.createElement("h1", null, React.createElement(Label, {bsStyle: userBMILabel}, userBMIText))
+        React.createElement("p", {id: "today-data", style: infoStyle}, "Today recorded data: ", this.props.todayDataWeight, " kg"), 
+        React.createElement("label", {style: labelStyle, className: "col-sm-3"}, "Weight:"), 
+        React.createElement("input", {id: "weight-input", onChange: this.handleChange, style: inputStyle, className: "col-sm-6", type: "text", value: this.state.inputValue}), 
+        React.createElement(Button, {onClick: this.handleSave, className: "col-sm-3"}, buttonText), React.createElement("br", null), 
+        React.createElement("p", {id: "BMI-today", style: infoBMIStyle}, "Today BMI: ", React.createElement("span", null, userBMI)), 
+        React.createElement("h1", {id: "BMI-description", style: infoBMIStyle}, React.createElement(Label, {bsStyle: userBMILabel}, userBMIText))
       )
     );
   }
@@ -31432,7 +31435,7 @@ const UpdateHeight = React.createClass({displayName: "UpdateHeight",
 
   render() {
     return (
-      React.createElement(Button, {onClick: this.handleToggle}, "Update")
+      React.createElement(Button, {id: "update-btn", onClick: this.handleToggle}, "Update")
     );
   },
 
@@ -31477,7 +31480,7 @@ const WeightChart = React.createClass({displayName: "WeightChart",
 
   render() {
     return (
-      React.createElement(Button, {onClick: this.handleToggle, bsStyle: "info"}, "View")
+      React.createElement(Button, {id: "view-btn", onClick: this.handleToggle, bsStyle: "info"}, "View")
     );
   },
 
@@ -31534,9 +31537,9 @@ var Welcome = React.createClass({displayName: "Welcome",
     return (
       React.createElement("div", {className: "col-md-6 col-md-offset-3 text-center"}, 
         React.createElement("h2", null, "Welcome"), 
-        React.createElement("h3", null, this.props.name), 
-        React.createElement("p", null, "Height: ", React.createElement("span", null, this.props.height), " ", React.createElement(UpdateHeight, {height: this.props.height, updateHeight: this.props.updateHeight})), 
-        React.createElement("p", null, "Your weight journal ", React.createElement(WeightChart, {dateLog: this.props.dateLog, weightLog: this.props.weightLog}), " ")
+        React.createElement("h3", {id: "name"}, this.props.name), 
+        React.createElement("p", {id: "user-data"}, "Height: ", React.createElement("span", null, this.props.height), " ", React.createElement(UpdateHeight, {height: this.props.height, updateHeight: this.props.updateHeight})), 
+        React.createElement("p", {id: "user-data"}, "Your weight journal ", React.createElement(WeightChart, {dateLog: this.props.dateLog, weightLog: this.props.weightLog}), " ")
       )
     );
   }

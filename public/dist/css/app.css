@@ -1,3 +1,89 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font: 14px "Helvetica Neue", Helvetica, Arial, sans-serif;
+  line-height: 1.4em;
+  background: #def;
+  color: #333333;
+  margin: 0 auto;
+  -webkit-font-smoothing: antialiased;
+}
+
+#app {
+  background: #444;
+  color: #999;
+  padding: 20px;
+  margin-bottom: 40px;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.2) 0 0.125em 0.375em 0;
+  -moz-box-shadow: rgba(0, 0, 0, 0.2) 0 0.125em 0.375em 0;
+  -ms-box-shadow: rgba(0, 0, 0, 0.2) 0 0.125em 0.375em 0;
+  -o-box-shadow: rgba(0, 0, 0, 0.2) 0 0.125em 0.375em 0;
+  box-shadow: rgba(0, 0, 0, 0.2) 0 0.125em 0.375em 0;
+  -webkit-border-radius: 0 0 0.32em 0.32em;
+  -moz-border-radius: 0 0 0.32em 0.32em;
+  -ms-border-radius: 0 0 0.32em 0.32em;
+  -o-border-radius: 0 0 0.32em 0.32em;
+  border-radius: 0 0 0.32em 0.32em;
+  height: 100%;
+  max-width: 900px;
+}
+
+#log-out-btn {
+  margin-bottom: 50px;
+}
+
+#debug-btn {
+  display: none;
+}
+
+#user-data {
+  font-size: 1.5rem;
+  color: #aaa;
+}
+
+#update-btn {
+  margin-left: 98px;
+  width: 100px;
+}
+
+#view-btn{
+  width: 100px;
+  margin-left: 50px;
+}
+
+#weight-input{
+  max-width: 180px;
+  margin-right: 10px;
+}
+
+#name {
+  text-transform: uppercase;
+  text-decoration: underline;
+  margin-top: -5px;
+  margin-bottom: 30px;
+}
+
 .progress {
   background-color: #cdf;
+}
+
+#today-data{
+  font-size: 2rem;
+  color: #ddd;
+  font-weight: bold;
+  margin-bottom: 30px;
+  text-decoration: underline;
+}
+
+#BMI-today {
+  color: #ddd;
+  display: block;
+  margin-top: 40px;
+  text-decoration: underline;
+  font-weight: bold;
+  font-size: 2rem;
 }

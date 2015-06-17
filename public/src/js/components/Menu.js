@@ -14,7 +14,7 @@ var Menu = React.createClass({
       <div className="col-xs-5 col-xs-offset-7">
         <form action="/session" method="post">
           <input type="hidden" name="_method" value="delete" />
-          <button className="btn btn-danger">Log out</button>
+          <button className="btn btn-danger pull-right">Log out</button>
         </form>
       </div>
     );
