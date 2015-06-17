@@ -1,1 +1,1 @@
-web: ruby main.rb -s puma -p $PORT
+web: ruby main.rb
